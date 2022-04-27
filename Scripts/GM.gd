@@ -2,51 +2,77 @@ extends Node
 
 
  
-
+enum gamestate{welcome,play,over}
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var iscaught=false
+var trapbowlposition=Vector2(467,74)
 var bombScene = preload("res://Scenes/Bomb.tscn")
 var mouseScene = preload("res://Scenes/Mouse.tscn")
-var trapScene=preload("res://Scenes/TrapBowl.tscn")
+#var bigtrapScene=preload("res://Scenes/BigTrapBowl.tscn")
+#var middletrapScene=preload("res://Scenes/MiddleTrapBowl.tscn")
+#var smalltrapScene=preload("res://Scenes/SmallTrapBowl.tscn")
 
-onready var trapScript=get_node("res://Scripts/TrapBowl.gd")
+onready var bigbowl=$Area2D3/BigTrapBowl
+#onready var middlebowl=$Area2D4/AnimatedSprite
+#onready var smallbowl=$Area2D5/AnimatedSprite
+onready var bomb=$Bomb
+onready var mouse=$Area2D2
+onready var bigbowlposition=$Area2D3
 
-var bomb
-var mouse
 var trap
 
-var difficultLevel=1
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree(), "idle_frame")
 	#yield(get_tree().create_timer(1), "timeout") # 1 second delay
-	GenerateMap(difficultLevel)
-	
+	GenerateMap(Global.difficultlevel)
+	Global.isover=false
+	Global.isCaught=false
+	#bomb.animation="blow"
+	bomb.set_frame(0)
 	
 	
 func GenerateMap(level):
-	bomb=bombScene.instance()
-	mouse=mouseScene.instance()
+	#bomb=bombScene.instance()
+	#mouse=mouseScene.instance()
+	
 	match level:
 		1:
-			$AnimatedSprite.play("BigTrapBowl")
+			bigbowl.animation="BigTrapBowl"
+			bigbowl.play()
 		2:
-			$AnimatedSprite.play("MiddleTrapBowl")
+			bigbowl.animation="MiddleTrapBowl"
+			bigbowl.play()
 		3:
-			$AnimatedSprite.play("SmallTrapBowl")
-	trap=trapScene.instance()
+			bigbowl.animation="SmallTrapBowl"
+			bigbowl.play()
+	
 	
 	
 func _process(delta):
-	while(trapScript.isfalling):
-		if trapcollision():
-			pass
+	
+	bombblow()
+	trapcollision()
+	print ("wan:",bigbowl.position.y)
+	
 		
 		
 func trapcollision():
-	return true
+	if bigbowl.position.y>=330 :
+		if mouse.position.x+17>=467:
+			Global.isCaught=true
+			Global.isover=true
+			if Global.difficultlevel<3:
+				Global.difficultlevel+=1
+			Global.setscene("res://Scenes/Victory.tscn")
+			
+func bombblow():
+	if bomb.get_frame()==14:
+		bomb.stop()
+		Global.isover=true
+		Global.setscene("res://Scenes/Died.tscn")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

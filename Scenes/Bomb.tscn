@@ -18,15 +18,16 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 13 ), ExtResource( 1 ), ExtResource( 11 ), ExtResource( 2 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 3 ), ExtResource( 14 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 13 ), ExtResource( 1 ), ExtResource( 11 ), ExtResource( 2 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 3 ), ExtResource( 14 ), null ],
 "loop": true,
-"name": "default",
+"name": "blow",
 "speed": 5.0
 } ]
 
 [node name="Bomb" type="AnimatedSprite"]
 position = Vector2( 1, 0 )
 frames = SubResource( 1 )
-frame = 8
+animation = "blow"
+frame = 4
 playing = true
 centered = false
