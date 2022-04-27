@@ -19,6 +19,9 @@ onready var bigbowl=$Area2D3/BigTrapBowl
 onready var bomb=$Bomb
 onready var mouse=$Area2D2
 onready var bigbowlposition=$Area2D3
+onready var leveltext=$TextEdit
+var temporytext
+
 
 var trap
 
@@ -30,6 +33,9 @@ func _ready():
 	GenerateMap(Global.difficultlevel)
 	Global.isover=false
 	Global.isCaught=false
+	Global.isgrounded=false
+	temporytext="Level:"+str(Global.difficultlevel)
+	leveltext.set_text(temporytext)
 	#bomb.animation="blow"
 	bomb.set_frame(0)
 	
@@ -60,8 +66,8 @@ func _process(delta):
 		
 		
 func trapcollision():
-	if bigbowl.position.y>=330 :
-		if mouse.position.x+17>=467:
+	if bigbowl.position.y>=340 &&!Global.isgrounded:
+		if mouse.position.x+17>=450:
 			Global.isCaught=true
 			Global.isover=true
 			if Global.difficultlevel<3:
@@ -71,7 +77,9 @@ func trapcollision():
 func bombblow():
 	if bomb.get_frame()==14:
 		bomb.stop()
+		Global.difficultlevel=1
 		Global.isover=true
+		
 		Global.setscene("res://Scenes/Died.tscn")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

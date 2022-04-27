@@ -2,7 +2,7 @@ extends AnimatedSprite
 
 
 
-var isplaying=false
+
 var newdirection=Vector2(0,0)
 var fallspeed=300
 
@@ -17,8 +17,10 @@ func _physics_process(delta):
 			
 			newdirection.y=1
 		if position.y>=370:
-			Global.isfalling=false
+			Global.isgrounded=true
+			Global.difficultlevel=1
 			newdirection.y=0
+			Global.setscene("res://Scenes/Died.tscn")
 		position +=newdirection*delta*300
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.

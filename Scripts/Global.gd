@@ -5,6 +5,7 @@ var isover=false
 var difficultlevel=1
 var isCaught = false
 var isfalling=true
+var isgrounded=false
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
