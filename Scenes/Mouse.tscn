@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Sprites/Mouse2-removebg-preview.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Mouse1-removebg-preview.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Mouse.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Mouse2d.gd" type="Script" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -18,13 +19,16 @@ extents = Vector2( 14.25, 9.75 )
 [node name="Puff" type="AnimatedSprite"]
 position = Vector2( -1, 0 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 centered = false
 script = ExtResource( 3 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Mouse2d" type="Area2D" parent="."]
+script = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mouse2d"]
 position = Vector2( 16.75, 16.25 )
 shape = SubResource( 2 )
+
+[connection signal="area_entered" from="Mouse2d" to="Mouse2d" method="_on_Area2D_area_entered"]
+[connection signal="body_entered" from="Mouse2d" to="Mouse2d" method="on_body_entered"]

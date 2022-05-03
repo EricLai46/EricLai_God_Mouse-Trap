@@ -61,7 +61,7 @@ func _process(delta):
 	
 	bombblow()
 	trapcollision()
-	print ("wan:",bigbowl.position.y)
+	#print ("wan:",bigbowl.position.y)
 	
 		
 		
